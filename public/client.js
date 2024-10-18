@@ -1,6 +1,8 @@
 const socket = io();
 
+// listener for "chat message"
 socket.on('chat message', (data) => {
+  console.log("Client received message");
   const messages = document.getElementById('messages');
   const li = document.createElement('li');
   li.textContent = `${data.user}: ${data.message}`;
@@ -13,6 +15,6 @@ document.getElementById('messageForm').addEventListener('submit', (e) => {
   const message = input.value.trim();
   if (message !== '') {
     socket.emit('chat message', { user: 'User', message });
-    input.value = '';
+    input.value = ''; 
   }
 });
