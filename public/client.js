@@ -19,10 +19,24 @@ document.getElementById('messageForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const input = document.getElementById('messageInput');
   const message = input.value.trim();
-  if (message !== '') {
 
-    //server
-    socket.emit('chat message', { message });
-    input.value = ''; 
+  if (message === '') {
+    console.error('Message cannot be empty!'); 
+    input.placeholder = 'Message cannot be empty!';
+    return;
   }
+  
+  if (message.length > 200) {
+    console.error('Message cannot exceed 200 characters!');
+    input.placeholder = 'Message cannot exceed 200 characters!'; 
+    return;
+  }
+
+  input.placeholder = '';
+  socket.emit('chat message', { user: username, message });
+  input.value = ''; 
+
+  input.addEventListener('input', () => {
+    input.placeholder = ''; // Clear the placeholder when user starts typing
+  });  
 });

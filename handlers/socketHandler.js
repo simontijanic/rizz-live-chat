@@ -13,6 +13,12 @@ const socketHandler = (io) => {
 
       socket.on('chat message', async (data) => {
         console.log('Chat:', data);
+
+        if (!data.message || typeof data.message !== 'string' || data.message.length > 200) {
+          console.error('Invalid message:', data.message);
+          return; 
+        }
+
         try {
           const message = new Message({ user: username, text: data.message });
           await message.save();
