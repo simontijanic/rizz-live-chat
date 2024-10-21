@@ -38,18 +38,38 @@ header h1 {
     flex-grow: 1;
     overflow-y: auto; 
     font-size: 2em; 
-    padding: 10px; 
+    max-width: 100%; /* Set max-width for the message area */
+}
+
+#messages li {
+    max-width: 800px; /* Ensure list items also have a max-width */
+    word-wrap: break-word; /* Allow words to break and wrap */
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
 }
 
 .other-message {
     text-align: right;
+    color: rgba(0, 0, 0, 0.836);   
 }
+
 .my-message {
     text-align: left;
+    color: rgba(0, 0, 0, 0.836);  
+}
+
+#messages strong {
+    font-weight: bolder;
+    color: black;
 }
 
 #messageForm {
     display: flex; 
+}
+
+#errorMessage {
+    position: fixed;
+    bottom: 100px;
 }
 
 #messageInput {
