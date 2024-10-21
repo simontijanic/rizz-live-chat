@@ -8,17 +8,23 @@
 
 </head>
 <body>
-  <img src="gfx/frog.png" alt="frog" srcset="">
+  <section>
+    <header>
+        <h1>RIZZ</h1>
+    </header>
 
-  <h1>RIZZ</h1>
-  <div id="chat">
-    <ul id="messages"></ul>
-    <form id="messageForm">
-      <input id="messageInput" autocomplete="off" />
-      <button>Send</button>
-    </form>
-  </div>
+    <div id="chat">
+        <ul id="messages">
+        </ul>
+        <form id="messageForm">
+            <input id="messageInput" autocomplete="off" />
+            <button>Send</button>
+        </form>
+    </div>
+  </section>
 
-
-</body>
+  <script>
+    const username = '<%= username %>'; // Set username dynamically
+  </script>
+  </body>
 </html>

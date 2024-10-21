@@ -4,7 +4,7 @@ async function connectDB() {
     try {
         const result = await mongoose.connect('mongodb://localhost:27017/');
         if (result) {
-            console.log("works");
+            console.log("Mongo DB Connected ");
         }
     } catch (err) {
         console.error("could not connect", err);
@@ -13,7 +13,7 @@ async function connectDB() {
 
 
 module.exports = {
-    connectDB
+    connectDB,
 }
 
 
