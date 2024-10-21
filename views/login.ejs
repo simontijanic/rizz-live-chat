@@ -2,20 +2,39 @@
 <html>
 <head>
   <title>LOG IN</title>
-  <link rel="stylesheet" href="styles.css"> 
+  <link rel="stylesheet" href="registrationStyle.css"> 
 </head>
 <body>
-  <h1>LOG IN</h1>
+  <header>  <h1>LOG IN</h1>
+    <p>Log inn for å chatte med venner og bli kjent med nye mennesker. Det er enkelt og gratis!</p>
+  </header>
 
     <form action="/login" method="post">
 
-        <input type="text" name="name" placeholder="Name">
-        <input type="password" name="password" placeholder="Password">
-        <input type="submit">
+        <input id="Name" type="text" name="name" placeholder="Name">
+        <input id="Password" type="password" name="password" placeholder="Password">
+        <input id="Submit" type="submit">
 
     </form>
 
-    <a href="signup.ejs"></a>
+    
+
+    <section>
+      <p>Har du ikke konto? <a href="/signup">Registrer inn her</a></p>
+      <br>
+      <h3>Brukerstøtte og regler</h3>
+      <p>Vi ønsker å skape et trygt og vennlig miljø for alle våre brukere. Vennligst les og følg reglene våre for å sikre en positiv opplevelse:</p>
+      <ul>
+          <li><strong>Respekter andre brukere:</strong> Behandle alle med respekt og vennlighet. Hate speech, trakassering eller mobbing vil ikke bli tolerert.</li>
+          <li><strong>Ingen upassende innhold:</strong> Unngå å dele støtende, vulgært eller upassende innhold. Dette inkluderer bilder, videoer og tekst.</li>
+          <li><strong>Ingen spam:</strong> Unngå å sende spam eller reklame. Del kun relevant informasjon og ressurser.</li>
+          <li><strong>Hold deg til temaet:</strong> Sørg for at samtalene holder seg til relevante emner. Unngå å avbryte eller forstyrre diskusjoner.</li>
+          <li><strong>Rapporter problemer:</strong> Hvis du opplever eller observerer brudd på reglene, vennligst rapporter det til oss umiddelbart.</li>
+      </ul>
+      <br>
+      <p>Ved å logge deg på Rizz Live Chat, bekrefter du at du har lest og forstått reglene våre. Vi ser frem til å ha deg som en del av vårt fellesskap!</p>
+
+    </section>
 
 </body>
 </html>

@@ -1,32 +1,40 @@
 const express = require('express');
 const router = express.Router();
-const userModel = require(`../models/userModel`)
-const mongoose = require(`mongoose`)
+const userModel = require(`../models/userModel`);
+const bcrypt = require('bcrypt');
 
-router.post("/signup",async (req, res)=>{
-
-    const data = {
-        name:req.body.name,
-        password:req.body.password
+router.post("/signup", async (req, res) => {
+    const existingUser = await userModel.findOne({ name: req.body.name });
+    
+    if (existingUser) {
+        return res.send("Username already taken, please choose another one.");
     }
 
-    await userModel.insertMany([data])
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
-    res.render("login")
+    const data = {
+        name: req.body.name,
+        password: hashedPassword // Store hashed password
+    };
 
-})
+    await userModel.insertMany([data]);
+    res.render("login");
+});
 
 router.post("/login", async (req, res) => {
     try {
         const check = await userModel.findOne({ name: req.body.name });
-
+        
         if (!check) {
             return res.send("User not found");
         }
 
-        if (check.password === req.body.password) {
+        const isMatch = await bcrypt.compare(req.body.password, check.password);
+        
+        if (isMatch) {
             req.session.username = req.body.name;
-            return res.render("index", { username: req.session.username });      
+            return res.render("index", { username: req.session.username });
         } else {
             return res.send("Wrong password");
         }
@@ -38,10 +46,11 @@ router.post("/login", async (req, res) => {
 
 
 router.get('/signup', (req, res) => {
-    res.render('signup')
-})
+    res.render('signup');
+});
+
 router.get('/', (req, res) => {
-    res.render('login')
-})
+    res.render('login');
+});
 
 module.exports = router;
