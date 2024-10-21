@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const socketIO = require('socket.io');
@@ -7,14 +8,14 @@ const routes = require('./routes/default');
 const socketHandler = require('./handlers/socketHandler');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-connectDB();
+connectDB(process.env.MONGODB_URI);
 
 // middleware
 
 const sessionMiddleware = session({
-  secret: 'den_er_22_cm', 
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false }
