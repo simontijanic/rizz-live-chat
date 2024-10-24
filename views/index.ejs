@@ -1,27 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Rizz Live Chat</title>
+  <title>Smartschoolboy9</title>
   <script defer src="/socket.io/socket.io.js"></script>
   <script defer src="client.js"></script>
   <link rel="stylesheet" href="styles.css">
 
 </head>
 <body>
+
+
+
   <section>
     <header>
-        <h1>RIZZ</h1>
-    </header>
+      <h1>Rizz i vei, <%= username %>!</h1>
+      <div id="onlineUsersContainer">
+          <h2>Pålogget brukere:</h2>
+          <ul id="onlineUsers"></ul>
+      </div>
+      <div id="user">
+        <img src="gfx/frog.png" alt="">
+        <h2>     <%= username %>    </h2>
+        <a href="signup">logout</a>
+      </div>
+  </header>
 
+  <div class="chatFrame">
+    <div id="bar">
+      <h1>| Global chat</h1>
+    </div>  
     <div id="chat">
-        <ul id="messages">
-        </ul>
-        <form id="messageForm">
-            <p id="errorMessage"></p>
-            <input id="messageInput" autocomplete="off" placeholder="Type your message..." />
-            <button>Send</button>
-        </form>
+      <ul id="messages">
+      </ul>
+      <form id="messageForm">
+          <p id="errorMessage"></p>
+          <input id="messageInput" autocomplete="off" placeholder="Skriv en melding..." />
+          <button>Send</button>
+      </form>
     </div>
+  </div>
+
   </section>
 
   <script>

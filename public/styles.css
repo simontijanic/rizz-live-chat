@@ -2,85 +2,164 @@
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    --buttoncolor: #007BFF;
+    --buttoncolorhover: #005dc0;
+    --secondarytextcolor: rgba(0, 0, 0, 0.65);
 }
 
 section {
     display: flex;
-    align-items: center;
-    justify-content: space-between; 
+    height: 100vh;
 }
 
 header {
     background-color: ghostwhite;
-    height: 100vh;
-    width: 200px;
+    width: 15%;
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2em;
 }
 
 header h1 {
-    margin-top: 0.5em;
     font-size: 2em;
+    margin-bottom: 1em;
+}
+
+header h2 {
+    margin: 1em 0;
+}
+
+#onlineUsersContainer {
+    background-color: var(--buttoncolor);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+#onlineUsers {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+
+#user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+}
+
+#user img {
+    height: 70%;
+}
+
+#user h2 {
+    color: var(--buttoncolor);
+}
+
+#user a {
+    color: var(--secondarytextcolor);
+    margin-left: 1em;
+    text-decoration: none;
+}
+
+.chatFrame {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+#bar {
+    height: 5vh;
+    width: 90%;
+}
+
+#bar h1 {
+    padding-top: 1em;
+    color: var(--secondarytextcolor);
+    font-size: 1em;
+    align-items: center;
 }
 
 #chat {
-    width: 90vw; 
-    height: 90vh;
+    width: 90%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
-    margin-right: 2em;
-    margin-left: 2em;
+    justify-content: flex-start;
+    height: calc(100vh - 10vh); 
 }
 
 #messages {
     flex-grow: 1;
     overflow-y: auto; 
-    font-size: 1.5em; 
-    max-width: 100%; /* Set max-width for the message area */
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    padding: 10px; 
+    background-color: #f9f9f9; 
+    border-radius: 5px;
 }
 
 #messages li {
-    max-width: 100%; /* Ensure list items also have a max-width */
-    word-wrap: break-word; /* Allow words to break and wrap */
+    max-width: 100%;
+    word-wrap: break-word;
     margin-bottom: 0.5em;
-    margin-top: 0.5em;
 }
 
 .other-message {
     text-align: right;
-    color: rgba(0, 0, 0, 0.836);   
+    color: rgba(0, 0, 0, 0.836);
+    width: 80%;
 }
 
 .my-message {
     text-align: left;
-    color: rgba(0, 0, 0, 0.836);  
+    color: rgba(0, 0, 0, 0.836);
+    width: 80%;
 }
 
-#messages strong {
-    font-weight: bolder;
-    color: black;
+.other-message em {
+    color: #c00000;
+}
+
+.my-message em {
+    color: var(--buttoncolor);
 }
 
 #messageForm {
-    display: flex; 
-}
-
-#errorMessage {
-    position: fixed;
-    bottom: 100px;
+    display: flex;
 }
 
 #messageInput {
-    flex-grow: 1; 
-    height: 1.5em;
-    font-size: 1.5em; 
-    margin-right: 10px; 
+    flex-grow: 1;
+    height: 3em;
+    font-size: 1.5em;
+    margin-right: 10px;
+    border: none;
+    outline: none;
 }
 
 button {
-    height: 1.5em;
-    width: 100px;
-    font-size: 1.5em; 
+    padding: 0.5em 2em;
+    background-color: var(--buttoncolor);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--buttoncolorhover);
+}
+
+#errorMessage {
+    color: red;
+    position: fixed;
 }
