@@ -24,6 +24,7 @@ const socketHandler = (io) => {
 
       if (recipient && users[recipient]) {
         io.to(users[recipient]).emit('chat message', { user: username, message: `(Private) ${message}` });
+        socket.emit('chat message', { user: username, message: `(Private) ${message}` });
       } else {
         io.emit('chat message', { user: username, message });
       }
