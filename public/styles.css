@@ -36,13 +36,15 @@ header h2 {
     color: white;
     padding: 10px;
     border-radius: 5px;
-    width: 100%;
+    width: 100%;    
+    font-size: 0.8em;
 }
 
 #onlineUsers {
     list-style-type: none;
     padding: 0;
     width: 100%;
+    font-size: 0.7em;
 }
 
 #user {

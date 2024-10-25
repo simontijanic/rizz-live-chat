@@ -33,17 +33,15 @@ socket.on('online users', (users) => {
 document.getElementById('messageForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const input = document.getElementById('messageInput');
-  const errorMessage = document.getElementById(`errorMessage`)
-  const message = input.value.trim();
+  const errorMessage = document.getElementById(`errorMessage`);
+  let message = input.value.trim();
 
   if (message === '') {
-    console.error('Message cannot be empty!');
     errorMessage.innerHTML = 'Message cannot be empty!';
     return;
   }
 
   if (message.length > 200) {
-    console.error('Message cannot exceed 200 characters!');
     errorMessage.innerHTML = 'Message cannot exceed 200 characters!';
     return;
   }
@@ -55,11 +53,12 @@ document.getElementById('messageForm').addEventListener('submit', (e) => {
 
   if (match) {
     recipient = match[1]; // Extract username after @
+    message = message.replace(regex, '').trim(); // Remove @username from the message text
   }
 
-  // Emit the message along with the recipient to the server
+  // Emit the message with the recipient (if any) to the server
   socket.emit('chat message', { user: username, message, recipient });
-  
+
   input.value = ''; 
   errorMessage.innerHTML = '';
 });

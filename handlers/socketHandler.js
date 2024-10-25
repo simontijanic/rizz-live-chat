@@ -2,10 +2,11 @@ const Message = require('../models/messageModel');
 let users = {}; // Object to store { username: socketId }
 
 const socketHandler = (io) => {
+  let users = {}; // Store users with their socket ID
+
   io.on('connection', (socket) => {
     const username = socket.handshake.session ? socket.handshake.session.username : undefined;
     if (!username) {
-      console.log("No username in session, disconnecting");
       return socket.disconnect();
     }
 
@@ -16,32 +17,21 @@ const socketHandler = (io) => {
       const { message, recipient } = data;
 
       if (!message || typeof message !== 'string' || message.length > 200) {
-        console.error('Invalid message:', message);
         return;
       }
 
-      try {
-        if (recipient && users[recipient]) {
-          const privateMessage = new Message({ user: username, text: message, reciever: recipient });
-          await privateMessage.save();
-          console.log('Private message saved to database');
-
-          io.to(users[recipient]).emit('chat message', { user: username, message: `(Private) ${message}` });
-        } else {
-          const publicMessage = new Message({ user: username, text: message, reciever: 'all' });
-          await publicMessage.save();
-          console.log('Public message saved to database');
-
-          io.emit('chat message', { user: username, message });
-        }
-      } catch (err) {
-        console.error(err);
+      if (recipient && users[recipient]) {
+        // Send a private message if `recipient` is specified and valid
+        io.to(users[recipient]).emit('chat message', { user: username, message: `(Private) ${message}` });
+      } else {
+        // Send a public message to all users
+        io.emit('chat message', { user: username, message });
       }
     });
 
     socket.on('disconnect', () => {
-      io.emit('online users', users); //skrive inn i dokumentasjonen på presentasjonen at istedet for å logge ting så har du gjort de til ekte funkjsoner på appen
-      delete users[username]; 
+      delete users[username];
+      io.emit('online users', users);
     });
   });
 };
