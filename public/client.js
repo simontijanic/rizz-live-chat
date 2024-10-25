@@ -1,21 +1,25 @@
 const socket = io();
 
-// ---------------------- LISTENERS ----------------- //
 socket.on('chat message', (data) => {
   const messages = document.getElementById('messages');
   const li = document.createElement('li');
 
-  if (data.user === username) {
-    li.className = 'my-message';
+  const isPrivateMessage = data.recipient && data.recipient !== username;   // sjeker om meldingen er en privat
+
+  if (data.user === username || !isPrivateMessage) {
+      li.className = 'my-message';
   } else {
-    li.className = 'other-message';
+      li.className = 'other-message';
   }
 
-  const messageText = data.message.startsWith('(Private)') ? `<em>${data.message}</em>` : data.message;
+  const messageText = isPrivateMessage 
+      ? `<em>(Private) ${data.message}</em>` 
+      : data.message;
   
   li.innerHTML = `<strong>${data.user}:</strong> ${messageText}`;
   messages.appendChild(li);
 });
+
 
 socket.on('online users', (users) => {
   const userList = document.getElementById('onlineUsers');
@@ -23,40 +27,38 @@ socket.on('online users', (users) => {
 
   for (const username in users) {
       const li = document.createElement('li');
-      li.textContent = `${username} (ID: ${users[username]})`; // Display username and socket ID
+      li.textContent = `${username} (ID: ${users[username]})`;
       userList.appendChild(li);
   }
 });
 
-// ---------------------- ANNET ----------------- //
 
 document.getElementById('messageForm').addEventListener('submit', (e) => {
   e.preventDefault();
+
   const input = document.getElementById('messageInput');
   const errorMessage = document.getElementById(`errorMessage`);
   let message = input.value.trim();
 
   if (message === '') {
-    errorMessage.innerHTML = 'Message cannot be empty!';
+    errorMessage.innerHTML = 'Meldingen må inneholde tekst!';
     return;
   }
 
   if (message.length > 200) {
-    errorMessage.innerHTML = 'Message cannot exceed 200 characters!';
+    errorMessage.innerHTML = 'Meldingen kan ikke være større enn 200 bokstaver!';
     return;
   }
 
-  // Detect if the message starts with @username
   let recipient = null;
-  const regex = /^@(\w+)/; // Regex to detect @username
+  const regex = /^@([\w.-]+)/;
   const match = message.match(regex);
 
   if (match) {
-    recipient = match[1]; // Extract username after @
-    message = message.replace(regex, '').trim(); // Remove @username from the message text
+    recipient = match[1]; // får usernamer etter  @
+    message = message.replace(regex, '').trim(); // fjerner @username fra messagen
   }
 
-  // Emit the message with the recipient (if any) to the server
   socket.emit('chat message', { user: username, message, recipient });
 
   input.value = ''; 

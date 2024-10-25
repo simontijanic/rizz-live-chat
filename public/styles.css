@@ -131,7 +131,7 @@ header h2 {
 }
 
 .my-message em {
-    color: var(--buttoncolor);
+    color: #004ac0;
 }
 
 #messageForm {

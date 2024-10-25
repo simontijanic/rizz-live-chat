@@ -1,16 +1,18 @@
 const Message = require('../models/messageModel');
-let users = {}; // Object to store { username: socketId }
+let users = {}; 
 
 const socketHandler = (io) => {
-  let users = {}; // Store users with their socket ID
-
   io.on('connection', (socket) => {
-    const username = socket.handshake.session ? socket.handshake.session.username : undefined;
+    const username = socket.handshake.session ? socket.handshake.session.username : undefined; // henter brukernavnet fra socket.handshake.session hvis det finnes eller så settes username til undefined
+    console.log(`Socket handshake session:`, socket.handshake.session); // ?: Hvis sesjonen finnes og : hvis ikke
+
     if (!username) {
       return socket.disconnect();
     }
 
+    socket.username = username;
     users[username] = socket.id;
+
     io.emit('online users', users);
 
     socket.on('chat message', async (data) => {
@@ -21,17 +23,17 @@ const socketHandler = (io) => {
       }
 
       if (recipient && users[recipient]) {
-        // Send a private message if `recipient` is specified and valid
         io.to(users[recipient]).emit('chat message', { user: username, message: `(Private) ${message}` });
       } else {
-        // Send a public message to all users
         io.emit('chat message', { user: username, message });
       }
     });
 
     socket.on('disconnect', () => {
-      delete users[username];
-      io.emit('online users', users);
+      if (socket.username) {
+        delete users[socket.username];
+        io.emit('online users', users);
+      }
     });
   });
 };
